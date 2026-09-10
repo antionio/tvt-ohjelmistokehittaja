@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Tuote</title>
+    </head>
+    <body>
+        Nimi: <input type="text" id="nimi" />
+        Hinta: <input type="number" id="hinta" />
+        <button onclick="lisaaTuote()">Lisää tuote</button>
+
+        <div id="tuotelista">-</div>
+        <br/>
+        Yhteensä: <br/>
+        <div id="yhteensa">0</div>
+    </body>
+
+    <script>
+        class Tuote {
+
+            constructor(nimi, hinta) {
+                this.nimi = nimi;
+                this.hinta = hinta;
+            }
+
+            tulosta() {
+                return `Tuotteen nimi: ${this.nimi}<br/>hinta: ${this.hinta}<br/>`;
+            }
+
+        }
+
+        const tuoteLista = [];
+
+        function lisaaTuote() {
+            // luo uusi tuote
+            const nimi = document.getElementById("nimi").value;
+            const hinta = document.getElementById("hinta").value;
+            const tuote = new Tuote(nimi, hinta);
+            
+            // lisää tuote tuotelistaan
+            tuoteLista.push(tuote);
+
+            // päivitä tuotelistan presentaatio eli tekstisisältö
+            let tulostus = "";
+            for (let i = 0; i < tuoteLista.length; i++) {
+                tulostus += tuoteLista[i].tulosta();
+            }
+
+            // päivitä tuotelista div
+            document.getElementById("tuotelista").innerHTML = tulostus;
+
+            // laske hinnat
+            laskeHinnat();
+        }
+
+        function laskeHinnat() {
+            let summa = 0;
+            for (let i = 0; i < tuoteLista.length; i++) {
+                summa += parseFloat(tuoteLista[i].hinta);
+            }
+
+            document.getElementById("yhteensa").innerHTML = summa;
+        }
+    </script>
+</html>
